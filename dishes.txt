@@ -1,0 +1,392 @@
+﻿12. Egg Roll or Vegetable Roll
+#卷
+13. Shrimp Roll
+虾卷
+14. Spring Roll
+上海卷
+15. Fried Meat Wontons
+炸云吞
+16. Boneless Spare Ribs
+#无骨排
+17. Steamed or Fried Vegetable Dumplings
+菜#
+18. Steamed or Fried Dumplings
+#
+19. Fantail Shrimps
+凤尾虾
+20. Bar-B-Que Spare Ribs
+#排骨
+21. Teriyaki Beef or Teriyaki Chicken
+#串
+22. Cream Cheese Wontons
+其
+23. Cold or Hot Sesame Noodles
+芝麻#面
+24. Shrimp Toast
+虾吐司
+25. Szechuan Dumpling in Red Hot Oil
+红油抄手
+26. Pu Pu Platter
+宝宝盘
+Egg Drop Soup
+#蛋花汤
+Wonton Soup
+#云吞汤
+Hot & Sour Soup
+#酸辣汤
+Vegetable & Bean Curd Soup
+蔬菜豆腐汤
+House Special Wonton Soup
+本楼云吞汤
+Chicken Rice Soup
+#鸡饭汤
+Chicken Noodle Soup
+#鸡面汤
+8. Shrimp Yat Gaw Mein or Beef
+#汤面
+9. Seafood Soup
+海鲜汤
+10. Shredded Pork w. Pickle Cabbage Soup
+榨菜肉丝汤
+11. Wonton Egg Drop Soup
+#云吞蛋花汤
+33. Vegetable Fried Rice
+#菜炒饭
+34. White Meat Chicken Fried Rice
+#鸡炒饭
+35. Roast Pork Fried Rice
+#叉烧炒饭
+36. Beef Fried Rice
+#牛炒饭
+37. Shrimp Fried Rice
+#虾炒饭
+38. House Special Fried Rice
+#本楼炒饭
+27. Vegetable Chow Mein
+菜炒面
+28. White Meat Chicken Chow Mein
+鸡炒面
+29. Roast Pork Chow Mein
+叉烧炒面
+30. Beef Chow Mein
+牛炒面
+31. Shrimp Chow Mein
+虾炒面
+32. House Special Chow Mein
+本楼炒面
+32a. Subgum Chicken Chow Mein
+什锦鸡炒面
+39. Vegetable Lo Mein
+#菜捞面
+40. Roast Pork Lo Mein
+#叉烧捞面
+41. Chicken Lo Mein
+#鸡捞面
+42. Beef Lo Mein
+#牛捞面
+43. Shrimp Lo Mein
+#虾捞面
+44. House Special Lo Mein
+#本楼捞面
+45. Vegetable Chow Mei Fun
+菜米粉
+46. Chicken Chow Mei Fun
+鸡米粉
+47. Beef Chow Mei Fun
+牛米粉
+48. Shrimp Chow Mei Fun
+虾米粉
+49. House Special Chow Mei Fun
+本楼米粉
+50. Singapore Noodles
+新加坡米粉
+96. Vegetable Egg Foo Young
+菜蓉蛋
+97. Roast Pork Egg Foo Young
+叉烧蓉蛋
+98. Chicken Egg Foo Young
+鸡蓉蛋
+99. Beef Egg Foo Young
+牛蓉蛋
+100. Mushroom Egg Foo Young
+蘑菇蓉蛋
+101. Shrimp Egg Foo Young
+虾蓉蛋
+102. House Special Egg Foo Young
+本楼蓉蛋
+103. Broccoli w. Garlic Sauce
+鱼香芥蓝
+104. Mock Duck
+马达
+105. Bean Curd, Home Style
+家常豆腐
+106. Bean Curd, Szechuan Style
+四川豆腐
+107. Mixed Vegetables
+杂菜
+108. Sauteed Broccoli
+炒芥蓝
+109. Sauteed Green Bean
+炒四季豆
+73. Beef w. Broccoli
+#芥蓝牛
+74. Pepper Steak w. Onion
+#青椒牛
+75. Beef w. Mixed Vegetables
+#杂菜牛
+76. Beef w. Snow Peas
+#雪豆牛
+77. Beef w. Oyster Sauce
+#蚝油牛
+78. Beef w. Garlic Sauce
+#鱼香牛
+79. Beef w. Curry Sauce
+#咖喱牛
+80. Beef w. Mushroom
+#蘑菇牛
+81. Hunan Beef
+湖南牛
+82. Moo Shu Beef
+木须牛
+83. Shredded Beef w. Szechuan Style
+四川牛
+84. Shredded Beef w. Hot & Spicy
+干烧牛
+51. Sweet & Sour Pork
+#甜酸肉
+52. Pork w. Broccoli
+#叉烧芥蓝
+53. Pork w. Mixed Vegetables
+#叉烧杂菜
+54. Pork w. Snow Peas
+#雪豆叉烧
+55. Double Cooked Pork
+回锅肉
+56. Shredded Pork w. Garlic Sauce
+鱼香叉烧
+57. Moo Shu Pork
+木须叉烧
+58. Chicken w. Cashew Nuts
+#腰果鸡
+59. Sweet & Sour Chicken
+#甜酸鸡
+60. Chicken w. Broccoli
+#芥蓝鸡
+61. Moo Goo Gai Pan
+#蘑菇鸡片
+62. Chicken w. Snow Peas
+#雪豆鸡
+63. Chicken w. Black Bean Sauce
+#豆豉鸡
+64. Chicken w. Mixed Vegetables
+#杂菜鸡
+65. Chicken w. Garlic Sauce
+#鱼香鸡
+66. Chicken w. Kung Pao Sauce
+#宫保鸡
+67. Chicken w. Curry Sauce
+#咖喱鸡
+68. Moo Shu Chicken
+木须鸡
+69. Lemon Chicken
+柠檬鸡
+71. Szechuan Chicken
+四川鸡
+72. Hunan Chicken
+湖南鸡
+72a. Chicken Green Bean
+四季豆鸡
+85. Sweet & Sour Shrimp
+#甜酸虾
+86. Shrimp w. Chinese Vegetable
+#杂菜虾
+87. Shrimp w. Broccoli
+#芥蓝虾
+88. Shrimp w. Snow Peas
+#雪豆虾
+89. Shrimp w. Lobster Sauce
+#虾龙糊
+90. Shrimp w. Garlic Sauce
+#鱼香虾
+91. Shrimp w. Black Bean Sauce
+#豆豉虾
+92. Shrimp w. Szechuan Style
+四川虾
+93. Scallop w. Garlic Sauce
+鱼香干贝
+94. Shrimp w. Kung Pao Sauce
+宫保虾
+95. Moo Shu Shrimp
+木须虾
+C1. White Meat Chicken Chow Mein
+C 鸡炒面
+C2. Shrimp Chow Mein
+C 虾炒面
+C3. Pepper Steak w. Onion
+C 青椒牛
+C4. Bar-B-Q Spare Ribs
+C 排骨
+C5. Shrimp w. Lobster Sauce
+C 虾龙糊
+C6. Pork w. Mixed Vegetables
+C 叉烧杂菜
+C7. Moo Goo Gai Pan
+C 蘑菇鸡片
+C8. Sweet & Sour Chicken
+C 甜酸鸡
+C9. Kung Pao Chicken or Shrimp
+C 宫保#
+C10. Roast Pork or Chicken Egg Foo Young
+C #蓉蛋
+C11. Chicken Almond or Cashew
+C #鸡
+C12. Shrimp Almond or Cashew
+C #虾
+C13. Chicken or Beef w. Garlic Sauce
+C 鱼香#
+C14. Chicken w. Broccoli
+C 芥蓝鸡
+C15. Beef w. Broccoli
+C 芥蓝牛
+C16. Pork w. Broccoli
+C 芥蓝叉烧
+C17. Roast Pork Lo Mein
+C 叉烧捞面
+C18. Mixed Chinese Vegetables
+C 杂菜
+C19. General Tso's Chicken
+C 左宗鸡
+C20. Shrimp w. Broccoli
+C 芥蓝虾
+C21. Szechuan Chicken or Beef
+C 四川#
+C22. Hunan Chicken or Beef
+C 湖南#
+C23. Boneless Spare Ribs
+C 无骨排
+C24. Hot & Spicy Beef
+C 干烧牛
+C25. Chicken or Beef w. Snow Peas
+C 雪豆#
+C26. Chicken & Shrimp, Hunan Style
+C 湖南双丁
+D1. Steamed Mixed Vegetable
+水煮杂菜
+D2. Steamed Broccoli
+水煮芥蓝
+D3. Steamed Bean Curd w. Fresh Mushroom & Broccoli
+水煮豆腐蘑菇芥蓝
+D4. Steamed Chicken w. Mixed Vegetables
+水煮杂菜鸡
+D5. Steamed Shrimp w. Mixed Vegetables
+水煮杂菜虾
+D6. Steamed Beef w. Mixed Vegetables
+水煮杂菜牛
+S1. General Tso's Chicken
+左宗鸡
+S2. Sesame Chicken
+芝麻鸡
+S3. Four Seasons
+炒四季
+S4. Chicken & Shrimp, Szechuan Style
+四川双丁
+S5. Scallop & Shrimp, Hunan Style
+湖南干贝虾
+S6. Lake Tung Ting Shrimp
+洞庭虾
+S7. Dragon & Phoenix
+龙凤配
+S8. Orange Beef or Chicken
+陈皮#
+S9. Chef Delight
+本楼大会
+S10. Seafood Delight
+海鲜大会
+S11. Mongolian Beef
+蒙古牛
+S12. Crispy Duck w. Mixed Vegetables
+杂菜脆皮鸭
+S13. Beef & Scallop, Hunan Style
+湖南干贝牛
+S14. Happy Family
+全家福
+S15. House Special Duck
+本楼鸭
+S16. Seafood Pan Fried Noodles
+海鲜两面黄
+S17. Crispy Chicken w. Walnuts
+核桃鸡
+S18. Hot and spicy chicken
+干烧鸡
+Soda
+#
+White Rice
+#白饭
+Crispy Noodles
+面干
+Fortune Cookies
+签语饼
+Almond Cookies
+杏仁饼
+Fried Half Chicken
+半鸡
+Fried Chicken Wings
+鸡翅
+Fried Baby Shrimps
+炸虾
+Spare Rib Tips
+排尾
+Chicken Fingers
+鸡粒
+French Fries
+#薯条
+L1. General Tso's or Sesame Chicken
+L #鸡
+L2. Chow Mein
+L #炒面
+L3. Lo Mein
+L #捞面
+L4. Pork w. Mixed Vegetables
+L 杂菜叉烧
+L5. Moo Goo Gai Pan
+L 蘑菇鸡片
+L6. Pepper Steak with Onions
+L 青椒牛
+L7. Shrimp with Lobster Sauce
+L 虾龙糊
+L8. Beef with Broccoli
+L 芥蓝牛
+L9. Chicken with Broccoli
+L 芥蓝鸡
+L10. Pork with Broccoli
+L 叉烧芥蓝
+L11. Sweet & Pungent Pork or Chicken
+L 甜酸#
+L12. Chicken with Garlic Sauce
+L 鱼香鸡
+L13. Pepper Chicken with Onions
+L 青椒鸡
+L14. Chicken or Pork Egg Foo Young
+L #蓉蛋
+L15. Hunan Chicken
+L 湖南鸡
+L16. Shrimp with Broccoli
+L 芥蓝虾
+L17. Shrimp with Chili Sauce
+L 干烧虾
+L18. Chicken or Shrimp with Cashew Nuts
+L 腰果#
+L19. Chicken & Shrimp, Hunan Style
+L 湖南#
+L20. Chicken with Mixed Vegetables
+L 杂菜鸡
+L21. Mixed Chinese Vegetables
+L 杂菜
+L22. Chicken with Kung Pao Sauce
+L 宫保鸡
+L23. Hot & Spicy Beef
+L 干烧牛
+L24. Szechuan Chicken or Beef
+L 四川#
+L25. Orange Chicken
+L 陈皮鸡

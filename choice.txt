@@ -1,0 +1,32 @@
+﻿Mild
+  不辣
+Medium
+  中辣
+Hot
+  很辣
+Beef Fried Rice
+  跟 牛饭
+Chicken Fried Rice
+  跟 鸡饭
+A Chicken Fried Rice
+  跟 鸡饭
+French Fries
+  跟 薯条
+Fried Rice
+  跟 净饭
+Plain
+  不跟
+A Plain
+  不跟
+Pork Fried Rice
+  跟 叉饭
+Shrimp Fried Rice
+  跟 虾饭
+Egg Drop Soup
+  跟 蛋花汤
+Egg Roll
+  跟 春卷
+Hot & Sour Soup
+  跟 酸辣汤
+Wonton Soup
+  跟 云吞汤

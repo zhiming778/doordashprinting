@@ -1,0 +1,60 @@
+﻿Hot
+热
+Cold
+凉
+Veg
+菜
+Beef
+牛
+Chicken
+鸡
+Roast Pork 
+叉烧
+Shrimp
+虾
+Almond
+杏仁
+Cashew
+腰果
+Egg Roll
+春
+Vegetable Roll
+菜
+Fried
+锅贴
+Steamed
+水饺
+Large
+大
+Small
+小
+A Large
+大
+A Small
+小
+Pint
+小
+Quart
+大
+General Tso's Chicken
+左宗
+Sesame Chicken
+芝麻
+Coke
+Coke
+Crush Grape
+Crush Grape
+Diet Coke
+Diet Coke
+Ginger Ale
+Ginger Ale
+Ice Tea
+Ice Tea
+Mountain Dew
+Mountain Dew
+Orange
+Orange
+Pepsi
+Pepsi
+Sprite
+Sprite
