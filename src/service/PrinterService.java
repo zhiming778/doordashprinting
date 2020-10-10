@@ -1,4 +1,5 @@
 package service;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -12,7 +13,6 @@ import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 
 import model.Commands;
-import model.JUtils;
 import model.Order;
 
 public class PrinterService {
@@ -20,8 +20,6 @@ public class PrinterService {
     private final String HEADER = "Door Dash", PRINTER_NAME = "receipt";
 
     public void print(Order order) {
-
-        JUtils.print("rendering print job...");
         PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
         DocPrintJob printJob = null;
         for (PrintService service : services) {
@@ -99,9 +97,8 @@ public class PrinterService {
 
     private void printItem(ByteArrayOutputStream os, String text) throws UnsupportedEncodingException, IOException {
         os.write(text.getBytes("GBK"));
-        if (!text.startsWith(" "))
-            feedLine(os);
         feedLine(os);
+
     }
 
     private void setChineseModeOn(ByteArrayOutputStream os) throws IOException {
