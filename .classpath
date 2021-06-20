@@ -6,10 +6,15 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="D:/eclipse-workspace/Test/src/activation.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-workspace/Test/src/additionnal.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-workspace/Test/src/javax.mail.jar"/>
-	<classpathentry kind="lib" path="D:/eclipse-workspace/Test/src/pdfbox-app-2.0.21.jar"/>
+	<classpathentry kind="src" path="test"/>
 	<classpathentry kind="lib" path="D:/eclipse-workspace/PrintOrder/src/commons-lang3-3.11.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-workspace/PrintOrder/src/pdfbox-app-2.0.21.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-workspace/PrintOrder/src/javax.mail.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-workspace/PrintOrder/src/activation.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-workspace/PrintOrder/src/additionnal.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
+	<classpathentry kind="lib" path="D:/eclipse-workspace/PrintOrder/src/mockito-core-3.11.1.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-workspace/PrintOrder/src/objenesis-3.2.jar"/>
+	<classpathentry kind="lib" path="D:/eclipse-workspace/PrintOrder/src/byte-buddy-1.11.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

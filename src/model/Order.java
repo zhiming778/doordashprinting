@@ -1,14 +1,16 @@
 package model;
 
+import java.util.Arrays;
+
 public class Order {
-    private long id;
+    private String id;
     private String name;
     private String date;
     private int numOfItems;
     private double total;
     private String[] items;
 
-    public Order(long id, String name, String date, int numOfItems, double total, String[] items) {
+    public Order(String id, String name, String date, int numOfItems, double total, String[] items) {
         super();
         this.id = id;
         this.name = name;
@@ -18,11 +20,11 @@ public class Order {
         this.items = items;
     }
 
-    public long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -66,7 +68,6 @@ public class Order {
         this.items = items;
     }
 
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -79,5 +80,18 @@ public class Order {
             sb.append(item + "\n");
         }
         return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (!(obj instanceof Order))
+            return false;
+        Order order = (Order) obj;
+        return id.equals(order.id) && name.equals(order.name) && numOfItems == order.numOfItems && total == order.total
+                && Arrays.equals(items, order.items);
     }
 }

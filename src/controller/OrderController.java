@@ -1,39 +1,34 @@
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.prefs.Preferences;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import model.GmailConnection;
 import model.Order;
 import model.PrefContract;
 import service.PrinterService;
-import view.OnItemClickListener;
-import view.OnPrintListener;
 import view.OrderView;
+import view.OrderView.OnOrderListener;
+import view.SettingDialog;
 import view.UpdateListener;
 
-public class OrderController implements UpdateListener, OnItemClickListener, OnPrintListener {
+public class OrderController implements UpdateListener, OnOrderListener {
     private List<Order> orders;
     private OrderView view;
-
-    public OrderController() {
+    
+    public OrderController(OrderView view) {
+        this.view = view;
         orders = new ArrayList<>();
-        view = new OrderView(this, this);
-        setButtonListeners(view);
         view.pack();
         view.setVisible(true);
 
-        Preferences prefs = PrefContract.getPrefs();
+        Preferences prefs = Preferences.userNodeForPackage(PrefContract.class);
         String username = prefs.get(PrefContract.KEY_USERNAME, PrefContract.DEF_USERNAME);
         String password = prefs.get(PrefContract.KEY_PASSWORD, PrefContract.DEF_PASSWORD);
-        String SENDER_ADDRESS = prefs.get(PrefContract.KEY_SENDER, PrefContract.DEF_SENDER);
-
+        String senderAddress = prefs.get(PrefContract.KEY_SENDER, PrefContract.DEF_SENDER);
 //        String username = "zhimingweng778@gmail.com";
 //        String password = "hgohwrzzcskwpshu";
 //        String SENDER_ADDRESS = "Jimmy Ong <zhimingweng778@gmail.com>";
@@ -44,14 +39,12 @@ public class OrderController implements UpdateListener, OnItemClickListener, OnP
 
         // Load 3 dictionaries
 
-        GmailConnection connection = new GmailConnection(this, SENDER_ADDRESS);
+        GmailConnection connection = new GmailConnection();
         // Call method fetch
-        connection.fetch(username, password);
+        connection.fetch(username, password, senderAddress,(UpdateListener)this);
     }
-
-    private void setButtonListeners(OrderView view) {
-        view.getSettingButton().addActionListener(new SettingActionListener(view));
-        view.getAboutButton().addActionListener(new AboutActionListener(view));
+    public void setOnOrderListener() {
+        view.setOnOrderListener((OnOrderListener)this);
     }
 
     @Override
@@ -64,7 +57,9 @@ public class OrderController implements UpdateListener, OnItemClickListener, OnP
         }
         view.setListData(data);
         if (ifPrint) {
-            PrinterService service = new PrinterService();
+            Preferences prefs = Preferences.userNodeForPackage(PrefContract.class);
+            String printerName = prefs.get(PrefContract.KEY_PRINTER, PrefContract.DEF_PRINTER);
+            PrinterService service = new PrinterService(printerName);
             service.print(newOrder);
         }
     }
@@ -76,14 +71,33 @@ public class OrderController implements UpdateListener, OnItemClickListener, OnP
     }
 
     @Override
-    public void onItemClick(int index) {
+    public void itemClick(int index) {
         view.setDetailText(orders.get(index));
     }
 
     @Override
-    public void onPrint(int index) {
-        PrinterService service = new PrinterService();
-        service.print(orders.get(index));
+    public void buttonClick(int actionType, int index) {
+        switch (actionType) {
+        case OrderView.ACTION_PRINT:
+            Preferences prefs = Preferences.userNodeForPackage(PrefContract.class);
+            String printerName = prefs.get(PrefContract.KEY_PRINTER, PrefContract.DEF_PRINTER);
+            PrinterService service = new PrinterService(printerName);
+            service.print(orders.get(index));
+            break;
+        case OrderView.ACTION_ABOUT:
+            JOptionPane.showMessageDialog(view,
+                    "<html><h2>Print DoorDash Order</h2><p>Version 1.0.0</p>"
+                            + "<p>License Key: J4L2-****-****-****</p><p>Developer: Zhiming</p></html>",
+                    "About", JOptionPane.PLAIN_MESSAGE);
+            break;
+        case OrderView.ACTION_SETTING:
+            SettingController settingController = new SettingController(new SettingDialog(view));
+            settingController.setOnSettingListener();
+            break;
+        default:
+            break;
+        }
+        
     }
 
     
@@ -93,40 +107,8 @@ public class OrderController implements UpdateListener, OnItemClickListener, OnP
     }
 
     public static void main(String[] args) {
-        new OrderController();
-    }
-
-    private static class SettingActionListener implements ActionListener {
-        private JFrame view;
-
-        public SettingActionListener(JFrame view) {
-            super();
-            this.view = view;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            SettingController settingController = new SettingController(view);
-        }
-
-    }
-
-    private static class AboutActionListener implements ActionListener {
-        private JFrame view;
-
-        public AboutActionListener(JFrame view) {
-            super();
-            this.view = view;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JOptionPane.showMessageDialog(view,
-                    "<html><h2>Print DoorDash Order</h2><p>Version 1.0.0</p>"
-                            + "<p>License Key: J4L2-****-****-****</p><p>Author: Jimmy</p></html>",
-                    "About", JOptionPane.PLAIN_MESSAGE);
-        }
-
+        OrderController orderController = new OrderController(new OrderView());
+        orderController.setOnOrderListener();
     }
 
 }

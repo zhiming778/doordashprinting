@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.geom.Rectangle2D;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.text.PDFTextStripperByArea;
 
 public class Converter {
-    private String[] rawDoc;
     private final Map<String, String> dishes, required, choice;
     private final String END_SIGN = "~ End of Order ~";
     private final String START_SIGN = "Qty";
@@ -24,14 +22,24 @@ public class Converter {
     private final Pattern itemPattern, choicePattern;
     private int startIndex, endIndex;
 
-    public Converter(PDDocument document, Map<String, String> dishes, Map<String, String> required,
-            Map<String, String> choice) {
+    public Converter(Map<String, String> dishes, Map<String, String> required, Map<String, String> choice) {
+        if (dishes == null || required == null || choice == null)
+            throw new NullPointerException("dictionary can't be null");
+        itemPattern = Pattern.compile("(\\d{1,2})x([^\\(]*)"); // group 2
+        choicePattern = Pattern.compile("Choice ([^\\(]+)"); // group 1
+        this.dishes = dishes;
+        this.required = required;
+        this.choice = choice;
+    }
+
+    private String[] init(PDDocument document, PDFTextStripperByArea stripper) {
+        if (document == null || stripper == null)
+            throw new NullPointerException("document or stripper can't be null.");
         StringBuilder sb = new StringBuilder();
         try {
             int numOfPages = document.getNumberOfPages();
             final PDRectangle pdRectangle = document.getPage(0).getBBox();
             Rectangle2D rect = pdRectangleToRectangle2D(pdRectangle);
-            PDFTextStripperByArea stripper = new PDFTextStripperByArea();
             stripper.setSortByPosition(true);
             stripper.addRegion("region_1", rect);
             for (int i = 0; i < numOfPages; i++) {
@@ -42,14 +50,22 @@ public class Converter {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        rawDoc = sb.toString().split("\r\n");
-        itemPattern = Pattern.compile("(\\d{1,2})x([^\\(]*)"); // group 2
-        choicePattern = Pattern.compile("Choice ([^\\(]+)"); // group 1
-        this.dishes = dishes;
-        this.required = required;
-        this.choice = choice;
         startIndex = -1;
         endIndex = -1;
+//        System.out.println(sb.toString());
+        return sb.toString().split("\r\n");
+    }
+
+    public Order convert(PDDocument document, PDFTextStripperByArea stripper) {
+        String[] rawDoc = init(document, stripper);
+        int len = format(rawDoc);
+        String[] items = getItems(rawDoc);
+        String date = getDate(rawDoc);
+        String id = getId(rawDoc);
+        String name = getName(rawDoc);
+        int numOfItems = getNumberOfItems(rawDoc);
+        double total = getTotal(rawDoc, len);
+        return new Order(id, name, date, numOfItems, total, items);
     }
 
     private Rectangle2D pdRectangleToRectangle2D(PDRectangle pdRectangle) {
@@ -66,62 +82,44 @@ public class Converter {
             return origin;
     }
 
-    private void format() {
-        List<String> lines = new ArrayList<>();
-        final int len = rawDoc.length;
+    private int format(String[] rawDoc) {
+        int len = 0;
         final Pattern itemPattern = Pattern.compile("^\\d+x");
-        for (int i = 0; i < len; i++) {
-
+        for (int i = 0; i < rawDoc.length; i++) {
             // outside item part
-            if ((startIndex == -1 && endIndex == -1) || (startIndex != -1 && endIndex != -1)) {
-                lines.add(rawDoc[i]);
+            if (startIndex == -1 || endIndex != -1) {
+                rawDoc[len++] = rawDoc[i];
                 if (rawDoc[i].contains(START_SIGN))
-                    startIndex = lines.size();
+                    startIndex = len;
             }
             // within item part
-            else {
-                if (Character.isDigit(rawDoc[i].charAt(0))) {
-                    Matcher matcher = itemPattern.matcher(rawDoc[i]);
-                    if (matcher.find()) {
-                        lines.add(removePrice(rawDoc[i]));
-                    } else {
-                        final int size = lines.size();
-                        lines.set(size - 1, lines.get(size - 1) + " " + removePrice(rawDoc[i]));
-                    }
-                }
-                // choice or required
-                else if (rawDoc[i].startsWith("\u2022")) {
-                    lines.add(removePrice(rawDoc[i]));
-                }
-                // end of order
-                else if (rawDoc[i].equals(END_SIGN)) {
-                    endIndex = lines.size();
-                    lines.add(rawDoc[i]);
-                }
-                // break lines within item part, details of special instruction
-                else {
-                    final int size = lines.size();
-                    lines.set(size - 1, lines.get(size - 1) + " " + removePrice(rawDoc[i]));
+            else if (Character.isDigit(rawDoc[i].charAt(0))) {
+                Matcher matcher = itemPattern.matcher(rawDoc[i]);
+                String priceRemoved = removePrice(rawDoc[i]);
+                if (matcher.find()) {
+                    rawDoc[len++] = priceRemoved;
+                } else {
+                    rawDoc[len - 1] = rawDoc[len - 1] + " " + priceRemoved;
                 }
             }
-
+            // choice or required
+            else if (rawDoc[i].startsWith("\u2022")) {
+                rawDoc[len++] = removePrice(rawDoc[i]);
+            }
+            // end of order
+            else if (rawDoc[i].equals(END_SIGN)) {
+                endIndex = len;
+                rawDoc[len++] = rawDoc[i];
+            }
+            // break lines within item part, details of special instruction
+            else {
+                rawDoc[len - 1] = rawDoc[len - 1] + " " + removePrice(rawDoc[i]);
+            }
         }
-        rawDoc = lines.toArray(new String[lines.size()]);
-
+        return len;
     }
 
-    public Order convert() {
-        format();
-        String[] items = getItems();
-        String date = getDate();
-        long id = getId();
-        String name = getName();
-        int numOfItems = getNumberOfItems();
-        double total = getTotal();
-        return new Order(id, name, date, numOfItems, total, items);
-    }
-
-    private String[] getItems() {
+    private String[] getItems(String[] rawDoc) {
         boolean isRequired = false;
         List<String> items = new ArrayList<String>();
         for (int i = startIndex; i < endIndex; i++) {
@@ -185,11 +183,11 @@ public class Converter {
         return items.toArray(new String[items.size()]);
     }
 
-    private double getTotal() {
+    private double getTotal(String[] rawDoc, int len) {
         final String TOTAL = "Total:";
         final Pattern totalPattern = Pattern.compile("\\$(\\d+.\\d+)");
         double total = -1;
-        for (int i = rawDoc.length - 1; i > endIndex; i--) {
+        for (int i = len - 1; i > endIndex; i--) {
             if (rawDoc[i].contains(TOTAL)) {
                 Matcher matcher = totalPattern.matcher(rawDoc[i]);
                 if (matcher.find()) {
@@ -202,32 +200,23 @@ public class Converter {
     }
 
     // return -1 if it doesn't match any number
-    private long getId() {
-        final String ID = "Order Number:";
-        final Pattern idPattern = Pattern.compile(": (\\d+)");
-        int id = -1;
-        for (int i = 0; i < startIndex; i++) {
-            if (rawDoc[i].contains(ID)) {
-                Matcher matcher = idPattern.matcher(rawDoc[i]);
-                if (matcher.find()) {
-                    id = Integer.parseInt(matcher.group(1));
-                    break;
-                }
-            }
-        }
-        return id;
+    private String getId(String[] rawDoc) {
+        final Pattern idPattern = Pattern.compile(": ([\\d\\w]+)");
+        Matcher matcher = idPattern.matcher(rawDoc[0]);
+        if (matcher.find())
+            return matcher.group(1);
+        return "N/A";
     }
 
-    private String getName() {
+    private String getName(String[] rawDoc) {
         Pattern idPattern = Pattern.compile("^\\S+\\s\\S+");
         Matcher idMatcher = idPattern.matcher(rawDoc[2]);
         if (idMatcher.find())
             return idMatcher.group();
-        else
-            return "N/A";
+        return "N/A";
     }
 
-    private String getDate() {
+    private String getDate(String[] rawDoc) {
         final Pattern datePattern = Pattern.compile("at (\\d{1,2}:\\d{1,2} [A|P]M)");
         String date = null;
         for (int i = 2; i < startIndex; i++) {
@@ -242,7 +231,7 @@ public class Converter {
         return date;
     }
 
-    private int getNumberOfItems() {
+    private int getNumberOfItems(String[] rawDoc) {
         final Pattern numPattern = Pattern.compile("(\\d+) items");
         int num = -1;
         for (int i = 2; i < startIndex; i++) {
@@ -253,23 +242,5 @@ public class Converter {
             }
         }
         return num;
-    }
-
-    public static void main(String[] args) {
-        PDDocument document;
-        try {
-            DictionaryLoader loader = new DictionaryLoader();
-            Map<String, String> dishes = loader.load("dishes.txt");
-            Map<String, String> required = loader.load("required.txt");
-            Map<String, String> choice = loader.load("choice.txt");
-            document = PDDocument.load(new File("test62.pdf"));
-            Converter converter = new Converter(document, dishes, required, choice);
-            Order order = converter.convert();
-            document.close();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
     }
 }

@@ -10,24 +10,30 @@ import javax.print.PrintException;
 import javax.print.PrintService;
 import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
+import javax.print.attribute.AttributeSet;
+import javax.print.attribute.HashAttributeSet;
 import javax.print.attribute.HashPrintRequestAttributeSet;
+import javax.print.attribute.standard.PrinterName;
 
 import model.Commands;
 import model.Order;
 
 public class PrinterService {
 
-    private final String HEADER = "Door Dash", PRINTER_NAME = "receipt";
+    private final String HEADER = "Door Dash";
+    private DocPrintJob printJob;
+
+    public PrinterService(String printerName) {
+        AttributeSet set = new HashAttributeSet();
+        set.add(new PrinterName(printerName, null));
+        PrintService[] services = PrintServiceLookup.lookupPrintServices(null, set);
+        printJob = null;
+        if(services.length!=0)
+            printJob = services[0].createPrintJob();
+    }
 
     public void print(Order order) {
-        PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
-        DocPrintJob printJob = null;
-        for (PrintService service : services) {
-            if (service != null && service.getName().equals(PRINTER_NAME)) {
-                printJob = service.createPrintJob();
-                break;
-            }
-        }
+        
         try {
             ByteArrayOutputStream os = new ByteArrayOutputStream();
             setChineseModeOn(os);

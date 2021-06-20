@@ -27,28 +27,35 @@ import javax.swing.plaf.FontUIResource;
 
 import model.Order;
 
-public class OrderView extends JFrame {
+public class OrderView extends JFrame implements ActionListener {
+    public static final int ACTION_PRINT = 0;
+    public static final int ACTION_ABOUT = 1;
+    public static final int ACTION_SETTING = 2;
+
     private JTextArea taDetail;
     private CustomButton btnPrint, btnSetting, btnAbout;
     private JList<String> list;
     private JScrollPane scrollPane;
     private final ListSelectionListener selectionListener;
     private static String TITLE = "Print OrderDash";
-    private OnItemClickListener itemClickListener;
-    private OnPrintListener printListener;
+    private OnOrderListener onOrderListener;
     private JLabel lbNoConnection;
 
-    public OrderView(OnItemClickListener itemClicklistener, OnPrintListener printListener) {
+    public interface OnOrderListener {
+        void itemClick(int index);
+
+        void buttonClick(int actionType, int index);
+    }
+
+    public OrderView() {
         super(TITLE);
         initFrame();
-        this.itemClickListener = itemClicklistener;
-        this.printListener = printListener;
         selectionListener = new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
                     int index = list.getSelectedIndex();
-                    itemClicklistener.onItemClick(index);
+                    onOrderListener.itemClick(index);
                 }
             }
         };
@@ -78,22 +85,31 @@ public class OrderView extends JFrame {
         add(lbNoConnection, BorderLayout.SOUTH);
     }
 
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == btnPrint) {
+            int index = list.getSelectedIndex();
+            if (index >= 0)
+                onOrderListener.buttonClick(ACTION_PRINT, index);
+        } else if (e.getSource() == btnAbout) {
+            onOrderListener.buttonClick(ACTION_ABOUT, -1);
+        } else if (e.getSource() == btnSetting) {
+            onOrderListener.buttonClick(ACTION_SETTING, -1);
+        }
+    }
+
+    public void setOnOrderListener(OnOrderListener onOrderListener) {
+        this.onOrderListener = onOrderListener;
+    }
+
     private JPanel createButtonPanel() {
         JPanel btnPanel = new JPanel();
         btnPrint = new CustomButton("Print");
-        btnPrint.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int index = list.getSelectedIndex();
-                if (index >= 0) {
-                    printListener.onPrint(index);
-                }
-            }
-        });
-
         btnSetting = new CustomButton("Setting");
         btnAbout = new CustomButton("About");
-
+        btnPrint.addActionListener(this);
+        btnSetting.addActionListener(this);
+        btnAbout.addActionListener(this);
         btnPanel = new JPanel();
         btnPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         btnPanel.add(btnPrint);
@@ -192,11 +208,5 @@ public class OrderView extends JFrame {
 
     public JButton getAboutButton() {
         return btnAbout;
-    }
-
-    public static void main(String[] args) {
-        OrderView view = new OrderView(null, null);
-        view.setVisible(true);
-        view.pack();
     }
 }

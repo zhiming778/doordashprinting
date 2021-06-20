@@ -1,7 +1,5 @@
 package model;
 
-import java.util.prefs.Preferences;
-
 public class PrefContract {
     public static String KEY_PRINTER = "key_printer";
     public static String KEY_USERNAME = "key_username";
@@ -12,7 +10,4 @@ public class PrefContract {
     public static String DEF_PASSWORD = "";
     public static String DEF_SENDER = "";
 
-    public static Preferences getPrefs() {
-        return Preferences.userNodeForPackage(PrefContract.class);
-    }
 }

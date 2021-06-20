@@ -1,4 +1,5 @@
 package model;
+
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -11,9 +12,11 @@ import java.util.Map.Entry;
 
 public class DictionaryLoader {
 
-    private final String BOM = "\uFEFF";
+    private final char BOM = '\uFEFF';
 
     public Map<String, String> load(String path) {
+        if(path == null)
+            throw new NullPointerException("path can't be null.");
         Map<String, String> dictionary = new HashMap<>();
         try {
             FileInputStream fis = new FileInputStream(path);
@@ -22,10 +25,10 @@ public class DictionaryLoader {
             String line, key = null, value;
             for (int i = 0; (line = br.readLine()) != null; i++) {
                 if (i % 2 == 0) {
-                    if (i == 0) {
-                        line = line.replace(BOM, "");
-                    }
-                    key = line;
+                    if (i == 0 && line.charAt(0) == BOM)
+                        key = line.substring(1);
+                    else
+                        key = line;
                 } else {
                     value = line;
                     dictionary.put(key, value);
@@ -44,10 +47,9 @@ public class DictionaryLoader {
 
     public static void main(String[] args) {
         DictionaryLoader loader = new DictionaryLoader();
-        Map<String, String> dishes = loader.load("dishes.txt");
+        Map<String, String> dishes = loader.load("a");
         for (Entry<String, String> entry : dishes.entrySet()) {
-            // System.out.println(entry.getKey());
+             System.out.println(entry.getKey());
         }
-        System.out.println(dishes.get("12. Egg Roll or Vegetable Roll"));
     }
 }

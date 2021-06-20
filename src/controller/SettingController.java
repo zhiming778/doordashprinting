@@ -1,68 +1,56 @@
 package controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.prefs.Preferences;
 
-import javax.swing.JFrame;
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
 
 import model.PrefContract;
 import view.SettingDialog;
+import view.SettingDialog.OnSettingListener;
 
-public class SettingController {
-        private SettingDialog dialog;
+public class SettingController implements OnSettingListener {
+    private SettingDialog dialog;
 
-    public SettingController(JFrame frame) {
-        dialog = new SettingDialog(frame);
+    public SettingController(SettingDialog dialog) {
+        this.dialog = dialog;
         initPreferences(dialog);
-        setButtonsListeners(dialog);
         dialog.pack();
         dialog.setVisible(true);
-        
+
     }
-    
-    private void setButtonsListeners(SettingDialog dialog) {
-        dialog.getSaveButton().addActionListener(new SaveActionListener(dialog));
-        dialog.getCancelButton().addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
-            }
-        });
+
+    public void setOnSettingListener() {
+        dialog.setOnSettingListener((OnSettingListener) this);
+    }
+
+    @Override
+    public void save(String valPrinter, String valUsername, String valPassoword, String valsender) {
+        Preferences prefs = Preferences.userNodeForPackage(PrefContract.class);
+        prefs.put(PrefContract.KEY_PRINTER, valPrinter);
+        prefs.put(PrefContract.KEY_USERNAME, valUsername);
+        prefs.put(PrefContract.KEY_PASSWORD, valPassoword);
+        prefs.put(PrefContract.KEY_SENDER, valsender);
     }
 
     private void initPreferences(SettingDialog dialog) {
-        Preferences prefs = PrefContract.getPrefs();
+        Preferences prefs = Preferences.userNodeForPackage(PrefContract.class);
         String valPrinter = prefs.get(PrefContract.KEY_PRINTER, PrefContract.DEF_PRINTER);
         String valUsername = prefs.get(PrefContract.KEY_USERNAME, PrefContract.DEF_USERNAME);
         String valPassoword = prefs.get(PrefContract.KEY_PASSWORD, PrefContract.DEF_PASSWORD);
         String valSender = prefs.get(PrefContract.KEY_SENDER, PrefContract.DEF_SENDER);
-        dialog.setPrinter(valPrinter);
+        dialog.setPrinters(loadPrinters(valPrinter));
         dialog.setUsername(valUsername);
         dialog.setPassword(valPassoword);
         dialog.setSender(valSender);
     }
 
-    private static class SaveActionListener implements ActionListener {
-        private SettingDialog dialog;
-
-        SaveActionListener(SettingDialog dialog) {
-            this.dialog = dialog;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            String valPrinter = dialog.getPrinter();
-            String valUsername = dialog.getUsername();
-            String valPassoword = dialog.getPassword();
-            String valsender = dialog.getSender();
-            Preferences prefs = PrefContract.getPrefs();
-            prefs.put(PrefContract.KEY_PRINTER, valPrinter);
-            prefs.put(PrefContract.KEY_USERNAME, valUsername);
-            prefs.put(PrefContract.KEY_PASSWORD, valPassoword);
-            prefs.put(PrefContract.KEY_SENDER, valsender);
-            dialog.dispose();
-        }
-
+    private String[] loadPrinters(String def) {
+        PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
+        String[] printers = new String[services.length + 1];
+        printers[0] = def;
+        for (int i = 1; i <= services.length; i++)
+            printers[i] = services[i - 1].getName();
+        return printers;
     }
 }
